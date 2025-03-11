@@ -343,6 +343,7 @@ for i in range(n - 1):
 print(permittivity[-1])
 
 
+#Different from inputValidation since a value is to be searched for
 def permittivityValidation(value):
     try:
         x = float(input(f"\nEnter a {value} to search for: "))
@@ -358,7 +359,8 @@ def permittivityValidation(value):
 
     except ValueError:
         print("Please enter a number")
-        return inputValidation(value) 
+        return inputValidation(value)
+
 
 def inputValidation(value):
     try:
@@ -378,7 +380,7 @@ def inputValidation(value):
         return inputValidation(value)
 
 
-x = inputValidation("permittivity")
+x = inputValidation("permittivity")  #Value once validated is stored as x
 
 
 def findPermittivity(permittivity, x):
@@ -398,7 +400,8 @@ permittivityIndex = findPermittivity(permittivity, x)
 def commonPermittivity():
     if permittivityIndex != -1:
         print("\nThe permittivity of the dielectric is the same as " +
-              relativePermittivities[f"product{permittivityIndex}"]["name"]) #Used to find dielectrics with the same relative permittivity
+              relativePermittivities[f"product{permittivityIndex}"]["name"]
+              )  #Used to find dielectrics with the same relative permittivity
 
 
 def findCapacitance(ε, area, distance):
@@ -422,7 +425,6 @@ r = 0.05  #r = Radius of the ball
 t = 0.016  #t = Time interval
 areaPlates = 0.01
 drag = 0.0
-
 
 
 class baselineValues:  #Class for the baseline values of the componenents
@@ -497,7 +499,7 @@ def dragCheck(drag, force):
         (drag - force) / force
     ) <= 0.05:  #If the difference between the drag and force is less than 5%
         drag = force  #then make them equal to each other
-        return drag , True
+        return drag, True
 
     else:
         return drag, False
@@ -710,18 +712,23 @@ class Field(Plates):
         print("force = " + str(self.force))
 
 
-baseline = baselineValues(u, v, pd, gap, ε0, εr, mass, charge, rho, cd, pi, r, t,
-                          areaPlates, drag)
+baseline = baselineValues(u, v, pd, gap, ε0, εr, mass, charge, rho, cd, pi, r,
+                          t, areaPlates, drag) #Creates baseline values
 
-plates = Plates(baseline.pd, baseline.gap, baseline.areaPlates)
+plates = Plates(baseline.pd, baseline.gap, baseline.areaPlates) #Creates plates
+
 dielectric = Dielectric(plates.pd, plates.gap, plates.areaPlates, baseline.ε0,
-                        baseline.εr, baseline.rho, baseline.cd)
+                        baseline.εr, baseline.rho, baseline.cd) #Creates dielectric
+
+
 field = Field(plates.pd, plates.gap, plates.areaPlates,
               (plates.pd / plates.gap),
-              baseline.charge * (plates.pd / plates.gap))
+              baseline.charge * (plates.pd / plates.gap)) #Creates field
+
+
 ball = Ball(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
-            baseline.r, baseline.t)
+            baseline.r, baseline.t)  #Creates ball
 
 #(plates.pd/plates.gap) = fieldStrength | ball.charge * (plates.pd / plates.gap) = force
 for i in range(500):
