@@ -334,13 +334,14 @@ relativePermittivities = {
     },
 }
 
-n = len(permittivity)
+length = len(permittivity)
 
-mergeSort(permittivity, 0, n - 1)
+mergeSort(permittivity, 0, length - 1)
+
 print("\nSorted array is")
-for i in range(n - 1):
+for i in range(length - 1):
     print(permittivity[i], end=", ")
-print(permittivity[-1])
+print(permittivity[-1]) #last element is not in for loop so is printed separately
 
 
 #Different from inputValidation since a value is to be searched for
@@ -387,10 +388,10 @@ def findPermittivity(permittivity, x):
     result = binary_search(permittivity, 0, len(permittivity) - 1, x)
 
     if result != -1:
-        print("Element is present at index", str(result))
+        print("Permittivity is present at index", str(result))
         return result
     else:
-        print("Element is not present in array")
+        print("Permittivity is not present in array")
         return -1
 
 
@@ -408,6 +409,30 @@ def findCapacitance(ε, area, distance):
     return (ε * area) / distance
 
 
+def dragCheck(drag, force):
+    if abs(
+        (drag - force) / force
+    ) <= 0.05:  #If the difference between the drag and force is less than 5%
+        drag = force  #then make them equal to each other
+        return drag
+
+    else:
+        return drag
+
+
+def hitPlates(ball, plates):
+    if ball.s >= plates.gap:
+        ball.reverseV()
+        ball.reverseU()
+        ball.reverseAcceleration()
+        ball.reverseDrag()
+        ball.updateS()
+        ball.updateU(ball.v)
+        ball.updateDrag()
+        dragCheck(ball.drag, field.force)
+        ball.updateAcceleration(ball.drag)
+
+
 commonPermittivity()
 
 u = 0.0  #U = Initial velocity
@@ -417,7 +442,7 @@ gap = 0.5  #gap = Gap between the two plates
 ε0 = 8.854187817 * (10**(-12))  #ε0 = Permittivity of free space
 εr = 1.0  #εr = Relative permittivity of the dielectric
 mass = 0.05  #mass = Mass of the ball
-charge = 1.0 * (10**(-6))  #charge = Charge of the ball
+charge = 1.0 * (10**(-4))  #charge = Charge of the ball
 rho = 100.0  #rho = Density of the dielectric
 cd = 0.47  #cd = Drag coefficient
 pi = 3.14159
@@ -494,17 +519,6 @@ class baselineValues:  #Class for the baseline values of the componenents
             return self.drag
 
 
-def dragCheck(drag, force):
-    if abs(
-        (drag - force) / force
-    ) <= 0.05:  #If the difference between the drag and force is less than 5%
-        drag = force  #then make them equal to each other
-        return drag, True
-
-    else:
-        return drag, False
-
-
 class Ball:
     global charge
     global mass
@@ -523,33 +537,6 @@ class Ball:
         self.drag = -(0.5 * dielectric.cd * dielectric.rho * self.crossArea *
                       self.v * self.v)  #Equation for drag
 
-    def getU(self):
-        return self.u
-
-    def getV(self):
-        return self.v
-
-    def getMass(self):
-        return self.mass
-
-    def getAcceleration(self):
-        return self.acceleration
-
-    def getS(self):
-        return self.s
-
-    def getCharge(self):
-        return self.charge
-
-    def getDrag(self):
-        return self.drag
-
-    def getR(self):
-        return self.r
-
-    def getcrossArea(self):
-        return self.crossArea
-
     def updateU(self, u):
         self.u = u
 
@@ -559,8 +546,8 @@ class Ball:
     def updateMass(self, mass):
         self.mass = mass
 
-    def updateAcceleration(self):
-        self.acceleration = (field.force + self.drag) / self.mass
+    def updateAcceleration(self, drag):
+        self.acceleration = (field.force + drag) / self.mass
 
     def updateS(self):
         self.s = self.u * self.t + (0.5 * self.acceleration * self.t * self.t)
@@ -588,15 +575,16 @@ class Ball:
         self.drag = -self.drag
 
     def classVariables(self):
-        print("u = " + str(self.u))
-        print("v = " + str(self.v))
-        print("mass = " + str(self.mass))
-        print("acceleration = " + str(self.acceleration))
-        print("s = " + str(self.s))
-        print("charge = " + str(self.charge))
-        print("r = " + str(self.r))
-        print("crossArea = " + str(self.crossArea))
-        print("drag = " + str(self.drag))
+        print(f"u = {self.u} ms^-1")
+        print(f"v = {self.v} ms^-1")
+        print(f"mass = {self.mass} kg")
+        print(f"acceleration = {self.acceleration} ms^-2")
+        print(f"s = {self.s} m")
+        print(f"charge = {self.charge} C")
+        print(f"r = {self.r} m")
+        print(f"crossArea = {self.crossArea} m^2")
+        print(f"drag = {self.drag} N")
+        print(f"resultantForce = {self.drag + field.force} N")
 
 
 class Plates:
@@ -608,15 +596,6 @@ class Plates:
         self.pd = pd
         self.gap = gap
         self.areaPlates = areaPlates
-
-    def getPD(self):
-        return self.pd
-
-    def getGapPlates(self):
-        return self.gap
-
-    def getAreaPlates(self):
-        return self.areaPlates
 
     def updatePD(self, pd):
         self.pd = pd
@@ -692,12 +671,6 @@ class Field(Plates):
         self.fieldStrength = fieldStrength
         self.force = force
 
-    def getFieldStrength(self):
-        return self.fieldStrength
-
-    def getForce(self):
-        return self.force
-
     def updateFieldStrength(self, fieldStrength):
         self.fieldStrength = fieldStrength
 
@@ -713,30 +686,32 @@ class Field(Plates):
 
 
 baseline = baselineValues(u, v, pd, gap, ε0, εr, mass, charge, rho, cd, pi, r,
-                          t, areaPlates, drag) #Creates baseline values
+                          t, areaPlates, drag)  #Creates baseline values
 
-plates = Plates(baseline.pd, baseline.gap, baseline.areaPlates) #Creates plates
+plates = Plates(baseline.pd, baseline.gap,
+                baseline.areaPlates)  #Creates plates
 
 dielectric = Dielectric(plates.pd, plates.gap, plates.areaPlates, baseline.ε0,
-                        baseline.εr, baseline.rho, baseline.cd) #Creates dielectric
-
+                        baseline.εr, baseline.rho,
+                        baseline.cd)  #Creates dielectric
 
 field = Field(plates.pd, plates.gap, plates.areaPlates,
               (plates.pd / plates.gap),
-              baseline.charge * (plates.pd / plates.gap)) #Creates field
-
+              baseline.charge * (plates.pd / plates.gap))  #Creates field
 
 ball = Ball(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
             baseline.r, baseline.t)  #Creates ball
 
 #(plates.pd/plates.gap) = fieldStrength | ball.charge * (plates.pd / plates.gap) = force
-for i in range(500):
-    print(f"Iteration {i}")
+
+for i in range(60):
     print("\n")
+    print(f"Iteration {i}")
     print(ball.classVariables())
-    print(f"field strength = {field.force}")
-    ball.updateAcceleration()
+    print(f"fieldStrength = {field.force}")
+    ball.updateDrag()
+    ball.updateAcceleration(ball.drag)
     ball.updateV()
     ball.updateS()
     ball.updateU(ball.v)
