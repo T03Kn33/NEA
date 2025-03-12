@@ -411,16 +411,16 @@ def findCapacitance(ε, area, distance):
 
 def dragCheck(drag, force):
     if abs(
-        (drag - force) / force
+        (drag + force) / force
     ) <= 0.05:  #If the difference between the drag and force is less than 5%
-        drag = force  #then make them equal to each other
-        return drag
+        drag = -force  #then make them equal and opposite
+        return drag , True
 
     else:
-        return drag
+        return drag , False
 
 
-def hitPlates(ball, plates):
+"""def hitPlates(ball, plates):
     if ball.s >= plates.gap:
         ball.reverseV()
         ball.reverseU()
@@ -430,7 +430,7 @@ def hitPlates(ball, plates):
         ball.updateU(ball.v)
         ball.updateDrag()
         dragCheck(ball.drag, field.force)
-        ball.updateAcceleration(ball.drag)
+        ball.updateAcceleration(ball.drag)"""
 
 
 commonPermittivity()
@@ -574,6 +574,9 @@ class Ball:
     def reverseDrag(self):
         self.drag = -self.drag
 
+    def overrideDrag(self, drag):
+        self.drag = drag
+
     def classVariables(self):
         print(f"u = {self.u} ms^-1")
         print(f"v = {self.v} ms^-1")
@@ -705,15 +708,19 @@ ball = Ball(baseline.u, 0, baseline.mass,
 
 #(plates.pd/plates.gap) = fieldStrength | ball.charge * (plates.pd / plates.gap) = force
 
-for i in range(60):
+for i in range(600):
     print("\n")
     print(f"Iteration {i}")
     print(ball.classVariables())
-    print(f"fieldStrength = {field.force}")
+    print(f"fieldForce = {field.force}")
     ball.updateDrag()
     ball.updateAcceleration(ball.drag)
     ball.updateV()
     ball.updateS()
     ball.updateU(ball.v)
     ball.updateDrag()
+    newDrag = dragCheck(ball.drag, field.force)
+    if newDrag[1]:
+        ball.overrideDrag(newDrag[0])
+
     dragCheck(ball.drag, field.force)
