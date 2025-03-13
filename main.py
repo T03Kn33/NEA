@@ -368,25 +368,19 @@ def findPermittivity(permittivityArray, validatedInput):
     result = binary_search(permittivityArray, 0, len(permittivityArray) - 1, x)
 
     if result != -1:
-        print("Permittivity is present at index", str(result))
         return result
     else:
-        print("Permittivity is not present in array")
         return -1
 
 
-permittivityIndex = findPermittivity(permittivity, validatedPermittivity)
+permittivityIndex = findPermittivity(permittivity, validatedPermittivity) #Stores result of binary search done to find if the input permittivity is the permittivty array
 
 
-def commonPermittivity():
+def commonPermittivity(): 
     if permittivityIndex != -1:
         print("\nThe permittivity of the dielectric is the same as " +
               relativePermittivities[f"product{permittivityIndex}"]["name"]
-              )  #Used to find dielectrics with the same relative permittivity
-
-
-def findCapacitance(ε, area, distance):
-    return (ε * area) / distance
+              )  #Used to find dielectrics with the same relative permittivity as the one inputted by user
 
 
 def dragCheck(drag, force):
@@ -399,18 +393,20 @@ def dragCheck(drag, force):
     else:
         return drag , False
 
-
+#Function below to be reviewed
 """def hitPlates(ball, plates):
     if ball.s >= plates.gap:
         ball.reverseV()
         ball.reverseU()
-        ball.reverseAcceleration()
+        ball.reverseCharge()
+        field.updateForce(ball.charge * field.fieldStrength)
         ball.reverseDrag()
+        ball.updateAcceleration(ball.drag)
+        ball.updateV()
         ball.updateS()
-        ball.updateU(ball.v)
         ball.updateDrag()
-        dragCheck(ball.drag, field.force)
-        ball.updateAcceleration(ball.drag)"""
+        dragCheck(ball.drag, field.force)  
+        """
 
 
 commonPermittivity()
@@ -556,6 +552,9 @@ class Ball:
 
     def overrideDrag(self, drag):
         self.drag = drag
+
+    def reverseCharge(self):
+        self.charge = -self.charge
 
     def classVariables(self):
         print(f"u = {self.u} ms^-1")
