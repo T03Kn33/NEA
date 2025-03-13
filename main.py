@@ -34,7 +34,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("300x300")
  
-    ball = MoveCanvas(root)
+    ball = moveBall(root)
     ball.pack(fill="both", expand=True)
  
     ds = 3
