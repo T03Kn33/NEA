@@ -423,16 +423,16 @@ def dragCheck(drag, force):
 #Function below to be reviewed
 """def hitPlates(ball, plates):
     if ball.s >= plates.gap:
-        ball.reverseV()
-        ball.reverseU()
-        ball.reverseCharge()
-        field.updateForce(ball.charge * field.fieldStrength)
-        ball.reverseDrag()
-        ball.updateAcceleration(ball.drag)
-        ball.updateV()
-        ball.updateS()
-        ball.updateDrag()
-        dragCheck(ball.drag, field.force)  
+        cubePhysics.reverseV()
+        cubePhysics.reverseU()
+        cubePhysics.reverseCharge()
+        cubePhysics.updateForce(cubePhysics.charge * field.fieldStrength)
+        cubePhysics.reverseDrag()
+        cubePhysics.updateAcceleration(cubePhysics.drag)
+        cubePhysics.updateV()
+        cubePhysics.updateS()
+        cubePhysics.updateDrag()
+        dragCheck(cubePhysics.drag, field.force)  
         """
 
 
@@ -708,7 +708,7 @@ field = Field(plates.pd, plates.gap, plates.areaPlates,
               (plates.pd / plates.gap),
               baseline.charge * (plates.pd / plates.gap))  #Creates field
 
-cubePhysics = Ball(baseline.u, 0, baseline.mass,
+cubePhysics = cubePhysics(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
             baseline.r, baseline.t)  #Creates cube
 
@@ -717,7 +717,7 @@ cubePhysics = Ball(baseline.u, 0, baseline.mass,
 for i in range(600):
     print("\n")
     print(f"Iteration {i}")
-    print(ball.classVariables())
+    print(cubePhysics.classVariables())
     print(f"fieldForce = {field.force}")
     field.updateForce(cubePhysics.charge * field.fieldStrength)
     cubePhysics.updateDrag()
