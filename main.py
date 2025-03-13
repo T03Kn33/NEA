@@ -1,7 +1,7 @@
 import time as time
 import tkinter as tk
 
-class MoveCanvas(tk.Canvas):
+class moveBall(tk.Canvas):
  
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,15 +29,15 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("300x300")
  
-    cvs = MoveCanvas(root)
-    cvs.pack(fill="both", expand=True)
+    ball = MoveCanvas(root)
+    ball.pack(fill="both", expand=True)
  
     ds = 3
   
-    root.bind("<KeyPress-Left>", lambda _: cvs.change_heading(-ds, 0))
-    root.bind("<KeyPress-Right>", lambda _: cvs.change_heading(ds, 0))
-    root.bind("<KeyPress-Up>", lambda _: cvs.change_heading(0, -ds))
-    root.bind("<KeyPress-Down>", lambda _: cvs.change_heading(0, ds))
+    root.bind("<KeyPress-Left>", lambda _: ball.change_heading(-ds, 0))
+    root.bind("<KeyPress-Right>", lambda _: ball.change_heading(ds, 0))
+    root.bind("<KeyPress-Up>", lambda _: ball.change_heading(0, -ds))
+    root.bind("<KeyPress-Down>", lambda _: ball.change_heading(0, ds))
       
     root.mainloop()
 
@@ -712,7 +712,7 @@ field = Field(plates.pd, plates.gap, plates.areaPlates,
               (plates.pd / plates.gap),
               baseline.charge * (plates.pd / plates.gap))  #Creates field
 
-ball = Ball(baseline.u, 0, baseline.mass,
+ballPhysics = Ball(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
             baseline.r, baseline.t)  #Creates ball
 
@@ -723,13 +723,13 @@ for i in range(600):
     print(f"Iteration {i}")
     print(ball.classVariables())
     print(f"fieldForce = {field.force}")
-    ball.updateDrag()
-    ball.updateAcceleration(ball.drag)
-    ball.updateV()
-    ball.updateS()
-    ball.updateU(ball.v)
-    ball.updateDrag()
-    newDrag = dragCheck(ball.drag, field.force)
+    ballPhysics.updateDrag()
+    ballPhysics.updateAcceleration(ball.drag)
+    ballPhysics.updateV()
+    ballPhysics.updateS()
+    ballPhysics.updateU(ball.v)
+    ballPhysics.updateDrag()
+    newDrag = dragCheck(ballPhysics.drag, field.force)
     if newDrag[1]:
-        ball.overrideDrag(newDrag[0])
+        ballPhysics.overrideDrag(newDrag[0])
 
