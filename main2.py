@@ -344,25 +344,6 @@ for i in range(length - 1):
 print(permittivity[-1]) #last element is not in for loop so is printed separately
 
 
-#Different from inputValidation since a value is to be searched for
-def permittivityValidation(value):
-    try:
-        x = float(input(f"\nEnter a {value} to search for: "))
-        if (type(x) is int or type(x) is float) and x > 0:
-            return x
-
-        else:
-            print("Please enter a number")
-            return inputValidation(value)
-    except TypeError:
-        print("Please enter a number")
-        return inputValidation(value)
-
-    except ValueError:
-        print("Please enter a number")
-        return inputValidation(value)
-
-
 def inputValidation(value):
     try:
         x = float(input(f"\nEnter a {value} : "))
@@ -722,5 +703,3 @@ for i in range(600):
     newDrag = dragCheck(ball.drag, field.force)
     if newDrag[1]:
         ball.overrideDrag(newDrag[0])
-
-    dragCheck(ball.drag, field.force)
