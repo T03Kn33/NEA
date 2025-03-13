@@ -703,4 +703,4 @@ for i in range(600):
     newDrag = dragCheck(ball.drag, field.force)
     if newDrag[1]:
         ball.overrideDrag(newDrag[0])
-    
+
