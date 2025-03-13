@@ -1,14 +1,7 @@
 import time as time
 import tkinter as tk
 
-def create_circle(x, y, r, canvas): #center coordinates, radius
-    x0 = x - r
-    y0 = y - r
-    x1 = x + r
-    y1 = y + r
-    return canvas.create_oval(x0, y0, x1, y1)
-
-class moveBall(tk.Canvas):
+class moveCube(tk.Canvas):
  
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -34,13 +27,13 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("300x300")
  
-    ball = moveBall(root)
-    ball.pack(fill="both", expand=True)
+    cube = moveCube(root)
+    cube.pack(fill="both", expand=True)
  
     ds = 3
   
-    root.bind("<KeyPress-Left>", lambda _: ball.change_heading(-ds))
-    root.bind("<KeyPress-Right>", lambda _: ball.change_heading(ds))
+    root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
+    root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
       
     root.mainloop()
 
@@ -529,7 +522,7 @@ class baselineValues:  #Class for the baseline values of the componenents
             return self.drag
 
 
-class Ball:
+class cubePhysics:
     global charge
     global mass
 
@@ -715,24 +708,25 @@ field = Field(plates.pd, plates.gap, plates.areaPlates,
               (plates.pd / plates.gap),
               baseline.charge * (plates.pd / plates.gap))  #Creates field
 
-ballPhysics = Ball(baseline.u, 0, baseline.mass,
+cubePhysics = Ball(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
-            baseline.r, baseline.t)  #Creates ball
+            baseline.r, baseline.t)  #Creates cube
 
-#(plates.pd/plates.gap) = fieldStrength | ball.charge * (plates.pd / plates.gap) = force
+#(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
 for i in range(600):
     print("\n")
     print(f"Iteration {i}")
     print(ball.classVariables())
     print(f"fieldForce = {field.force}")
-    ballPhysics.updateDrag()
-    ballPhysics.updateAcceleration(ballPhysics.drag)
-    ballPhysics.updateV()
-    ballPhysics.updateS()
-    ballPhysics.updateU(ballPhysics.v)
-    ballPhysics.updateDrag()
-    newDrag = dragCheck(ballPhysics.drag, field.force)
+    field.updateForce(cubePhysics.charge * field.fieldStrength)
+    cubePhysics.updateDrag()
+    cubePhysics.updateAcceleration(cubePhysics.drag)
+    cubePhysics.updateV()
+    cubePhysics.updateS()
+    cubePhysics.updateU(cubePhysics.v)
+    cubePhysics.updateDrag()
+    newDrag = dragCheck(cubePhysics.drag, field.force)
     if newDrag[1]:
-        ballPhysics.overrideDrag(newDrag[0])
+        cubePhysics.overrideDrag(newDrag[0])
 
