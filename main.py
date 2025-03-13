@@ -13,8 +13,7 @@ import time as time
 
 def PhysicsExplanation():
     print(
-        "\nThe permittivity of a material is the ratio of the permeability of the"
-        " material to the permeability of vacuum.(This is a placeholder)")
+        "\n An electric field is created by charged objects and other charged objects in the field will experience a force in this field. The ball starts reflecting off the plates because when it is first attracted to a plate it's polarity reverses due to the transfer of elctrons either to or from the plates. This then causes it to be attracted to the other plate with opposite polarity, with the cycle continuing until the force stops acting on it (Newton's First Law of Motion)")
 
 
 #GeeksforGeeks | Source:(https://www.geeksforgeeks.org/python-program-for-merge-sort/)
