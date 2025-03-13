@@ -712,7 +712,7 @@ cubePhysics = cubePhysics(baseline.u, 0, baseline.mass,
 
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
-for i in range(600):
+for i in range(60):
     print("\n")
     print(f"Iteration {i}")
     print(cubePhysics.classVariables())
