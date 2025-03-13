@@ -17,7 +17,7 @@ class moveBall(tk.Canvas):
   
         self.box = self.create_rectangle(0, 0, 10, 10, fill="black")
  
-        self.dt = 25
+        self.dt = 16
         self.tick()
       
     def tick(self):
