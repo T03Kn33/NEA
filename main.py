@@ -445,11 +445,11 @@ gap = 0.5  #gap = Gap between the two plates
 ε0 = 8.854187817 * (10**(-12))  #ε0 = Permittivity of free space
 εr = 1.0  #εr = Relative permittivity of the dielectric
 mass = 0.05  #mass = Mass of the ball
-charge = 1.0 * (10**(-4))  #charge = Charge of the ball
+charge = 1.0 * (10**(-4))  #charge = Charge of the cube
 rho = 100.0  #rho = Density of the dielectric
 cd = 0.47  #cd = Drag coefficient
 pi = 3.14159
-r = 0.05  #r = Radius of the ball
+r = 0.05  #r = Length of the cube
 t = 0.016  #t = Time interval
 areaPlates = 0.01
 drag = 0.0
