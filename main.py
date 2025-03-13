@@ -39,8 +39,8 @@ if __name__ == "__main__":
  
     ds = 3
   
-    root.bind("<KeyPress-Left>", lambda _: ball.change_heading(-ds, 0))
-    root.bind("<KeyPress-Right>", lambda _: ball.change_heading(ds, 0))
+    root.bind("<KeyPress-Left>", lambda _: ball.change_heading(-ds))
+    root.bind("<KeyPress-Right>", lambda _: ball.change_heading(ds))
       
     root.mainloop()
 
