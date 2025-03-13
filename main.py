@@ -587,7 +587,7 @@ class cubePhysics:
         print(f"acceleration = {self.acceleration} ms^-2")
         print(f"s = {self.s} m")
         print(f"charge = {self.charge} C")
-        print(f"r = {self.r} m")
+        print(f"w = {self.w} m")
         print(f"crossArea = {self.crossArea} m^2")
         print(f"drag = {self.drag} N")
         print(f"resultantForce = {self.drag + field.force} N")
