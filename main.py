@@ -14,7 +14,6 @@ class moveBall(tk.Canvas):
         super().__init__(*args, **kwargs)
  
         self.dx = 0
-        self.dy = 0
   
         self.box = self.create_rectangle(0, 0, 10, 10, fill="black")
  
@@ -23,12 +22,11 @@ class moveBall(tk.Canvas):
       
     def tick(self):
  
-        self.move(self.box, self.dx, self.dy)
+        self.move(self.box, self.dx, 0)
         self.after(self.dt, self.tick)
  
-    def change_heading(self, dx, dy):
+    def change_heading(self, dx):
         self.dx = dx
-        self.dy = dy
   
  
 if __name__ == "__main__":
@@ -43,8 +41,6 @@ if __name__ == "__main__":
   
     root.bind("<KeyPress-Left>", lambda _: ball.change_heading(-ds, 0))
     root.bind("<KeyPress-Right>", lambda _: ball.change_heading(ds, 0))
-    root.bind("<KeyPress-Up>", lambda _: ball.change_heading(0, -ds))
-    root.bind("<KeyPress-Down>", lambda _: ball.change_heading(0, ds))
       
     root.mainloop()
 
