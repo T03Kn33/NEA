@@ -384,14 +384,14 @@ def inputValidation(value):
             return x
 
         else:
-            print("Please enter a positive {value}")
+            print(f"Please enter a positive {value}")
             return inputValidation(value)
     except TypeError:
-        print("Please enter a positive {value}")
+        print(f"Please enter a positive {value}")
         return inputValidation(value)
 
     except ValueError:
-        print("Please enter a positive {value}")
+        print(f"Please enter a positive {value}")
         return inputValidation(value)
 
 
@@ -399,7 +399,7 @@ validatedPermittivity = inputValidation("permittivity")  #Value once validated i
 
 
 def findPermittivity(permittivityArray, validatedInput):
-    result = binary_search(permittivityArray, 0, len(permittivityArray) - 1, x)
+    result = binary_search(permittivityArray, 0, len(permittivityArray) - 1, validatedPermittivity)
 
     if result != -1:
         return result
