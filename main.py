@@ -727,10 +727,10 @@ for i in range(600):
     print(ball.classVariables())
     print(f"fieldForce = {field.force}")
     ballPhysics.updateDrag()
-    ballPhysics.updateAcceleration(ball.drag)
+    ballPhysics.updateAcceleration(ballPhysics.drag)
     ballPhysics.updateV()
     ballPhysics.updateS()
-    ballPhysics.updateU(ball.v)
+    ballPhysics.updateU(ballPhysics.v)
     ballPhysics.updateDrag()
     newDrag = dragCheck(ballPhysics.drag, field.force)
     if newDrag[1]:
