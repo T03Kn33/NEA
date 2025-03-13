@@ -447,9 +447,8 @@ gap = 0.5  #gap = Gap between the two plates
 mass = 0.05  #mass = Mass of the ball
 charge = 1.0 * (10**(-4))  #charge = Charge of the cube
 rho = 100.0  #rho = Density of the dielectric
-cd = 0.47  #cd = Drag coefficient
-pi = 3.14159
-r = 0.05  #r = Length of the cube
+cd = 1.05 #cd = Drag coefficient
+w = 0.05  #w = Width of the cube
 t = 0.016  #t = Time interval
 areaPlates = 0.01
 drag = 0.0
@@ -457,7 +456,7 @@ drag = 0.0
 
 class baselineValues:  #Class for the baseline values of the componenents
 
-    def __init__(self, u, v, pd, gap, ε0, εr, mass, charge, rho, cd, pi, r, t,
+    def __init__(self, u, v, pd, gap, ε0, εr, mass, charge, rho, cd, w, t,
                  areaPlates, drag):
         self.u = u
         self.v = v
@@ -469,9 +468,8 @@ class baselineValues:  #Class for the baseline values of the componenents
         self.charge = charge
         self.rho = rho
         self.cd = cd
-        self.pi = pi
-        self.r = r
-        self.crossArea = r * r * pi
+        self.w = w 
+        self.crossArea = w * w
         self.t = t
         self.areaPlates = areaPlates
         self.drag = drag
@@ -526,7 +524,7 @@ class cubePhysics:
     global charge
     global mass
 
-    def __init__(self, u, v, mass, acceleration, charge, r, t):
+    def __init__(self, u, v, mass, acceleration, charge, w, t):
         self.u = u
         self.v = v
         self.mass = mass
@@ -535,8 +533,8 @@ class cubePhysics:
         self.s = (self.u * self.t) + (0.5 * self.acceleration * self.t *
                                       self.t)
         self.charge = charge
-        self.r = r
-        self.crossArea = r * r * pi
+        self.w = w
+        self.crossArea = w * w
         self.drag = -(0.5 * dielectric.cd * dielectric.rho * self.crossArea *
                       self.v * self.v)  #Equation for drag
 
@@ -694,7 +692,7 @@ class Field(Plates):
         print("force = " + str(self.force))
 
 
-baseline = baselineValues(u, v, pd, gap, ε0, εr, mass, charge, rho, cd, pi, r,
+baseline = baselineValues(u, v, pd, gap, ε0, εr, mass, charge, rho, cd, w,
                           t, areaPlates, drag)  #Creates baseline values
 
 plates = Plates(baseline.pd, baseline.gap,
@@ -710,7 +708,7 @@ field = Field(plates.pd, plates.gap, plates.areaPlates,
 
 cubePhysics = cubePhysics(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
-            baseline.r, baseline.t)  #Creates cube
+            baseline.w, baseline.t)  #Creates cube
 
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
