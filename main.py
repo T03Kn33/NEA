@@ -345,27 +345,27 @@ print(permittivity[-1]) #last element is not in for loop so is printed separatel
 
 def inputValidation(value):
     try:
-        x = float(input(f"\nEnter a {value} : "))
+        x = float(input(f"\nEnter a positive {value} : "))
         if (type(x) is int or type(x) is float) and x > 0:
             return x
 
         else:
-            print("Please enter a number")
+            print("Please enter a positive {value}")
             return inputValidation(value)
     except TypeError:
-        print("Please enter a number")
+        print("Please enter a positive {value}")
         return inputValidation(value)
 
     except ValueError:
-        print("Please enter a number")
+        print("Please enter a positive {value}")
         return inputValidation(value)
 
 
-x = inputValidation("permittivity")  #Value once validated is stored as x
+validatedPermittivity = inputValidation("permittivity")  #Value once validated is stored as validatedPermittivity
 
 
-def findPermittivity(permittivity, x):
-    result = binary_search(permittivity, 0, len(permittivity) - 1, x)
+def findPermittivity(permittivityArray, validatedInput):
+    result = binary_search(permittivityArray, 0, len(permittivityArray) - 1, x)
 
     if result != -1:
         print("Permittivity is present at index", str(result))
@@ -375,7 +375,7 @@ def findPermittivity(permittivity, x):
         return -1
 
 
-permittivityIndex = findPermittivity(permittivity, x)
+permittivityIndex = findPermittivity(permittivity, validatedPermittivity)
 
 
 def commonPermittivity():
