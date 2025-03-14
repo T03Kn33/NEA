@@ -1,6 +1,26 @@
 import time as time
 import tkinter as tk
 
+class moveCube(tk.Canvas):
+ 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+ 
+        self.dx = 0
+  
+        self.box = self.create_rectangle(250, 250, 260, 260, fill="black")
+ 
+        self.dt = 16
+        self.tick()
+      
+    def tick(self):
+ 
+        self.move(self.box, self.dx, 0)
+        self.after(self.dt, self.tick)
+ 
+    def change_heading(self, dx):
+        self.dx = dx
+
 def PhysicsExplanation():
     print(
         "\n An electric field is created by charged objects and other charged objects in the field will experience a force in this field. The ball starts reflecting off the plates because when it is first attracted to a plate it's polarity reverses due to the transfer of elctrons either to or from the plates. This then causes it to be attracted to the other plate with opposite polarity, with the cycle continuing until the force stops acting on it (Newton's First Law of Motion)")
@@ -408,7 +428,7 @@ gap = 0.5  #gap = Gap between the two plates
 ε0 = 8.854187817 * (10**(-12))  #ε0 = Permittivity of free space
 εr = 1.0  #εr = Relative permittivity of the dielectric
 mass = 0.05  #mass = Mass of the ball
-charge = 1.0 * (10**(-4))  #charge = Charge of the cube
+charge = 1.0 * (10**(0))  #charge = Charge of the cube
 rho = 100.0  #rho = Density of the dielectric
 cd = 1.05 #cd = Drag coefficient
 w = 0.05  #w = Width of the cube
@@ -675,44 +695,24 @@ cubePhysics = cubePhysics(baseline.u, 0, baseline.mass,
 
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
+def iterate(): ##Make a while loop instead for loop
+    for i in range(60):
+        print("\n")
+        print(f"T = {i*baseline.t} s")
+        print(cubePhysics.classVariables())
+        print(f"fieldForce = {field.force}")
+        field.updateForce(cubePhysics.charge * field.fieldStrength)
+        cubePhysics.updateDrag()
+        cubePhysics.updateAcceleration(cubePhysics.drag)
+        cubePhysics.updateV()
+        cubePhysics.updateS()
+        cubePhysics.updateU(cubePhysics.v)
+        cubePhysics.updateDrag()
+        newDrag = dragCheck(cubePhysics.drag, field.force)
+        if newDrag[1]:
+            cubePhysics.overrideDrag(newDrag[0])
 
-for i in range(60):
-    print("\n")
-    print(f"Iteration {i}")
-    print(cubePhysics.classVariables())
-    print(f"fieldForce = {field.force}")
-    field.updateForce(cubePhysics.charge * field.fieldStrength)
-    cubePhysics.updateDrag()
-    cubePhysics.updateAcceleration(cubePhysics.drag)
-    cubePhysics.updateV()
-    cubePhysics.updateS()
-    cubePhysics.updateU(cubePhysics.v)
-    cubePhysics.updateDrag()
-    newDrag = dragCheck(cubePhysics.drag, field.force)
-    if newDrag[1]:
-        cubePhysics.overrideDrag(newDrag[0])
-
-
-class moveCube(tk.Canvas):
- 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
- 
-        self.dx = 0
-  
-        self.box = self.create_rectangle(250, 250, 260, 260, fill="black")
- 
-        self.dt = 16
-        self.tick()
-      
-    def tick(self):
- 
-        self.move(self.box, self.dx, 0)
-        self.after(self.dt, self.tick)
- 
-    def change_heading(self, dx):
-        self.dx = dx
-  
+iterate() #Prints underlying physics values  
  
 if __name__ == "__main__":
  
@@ -722,9 +722,7 @@ if __name__ == "__main__":
     cube = moveCube(root)
     cube.pack(fill="both", expand=True)
  
-    ds = 3
+    ds = cubePhysics.s
   
     root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
     root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
-      
-    root.mainloop()
