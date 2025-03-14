@@ -10,7 +10,7 @@ class moveCube(tk.Canvas):
   
         self.box = self.create_rectangle(250, 250, 260, 260, fill="black")
  
-        self.dt = 16
+        self.dt = 16.6
         self.tick()
       
     def tick(self):
