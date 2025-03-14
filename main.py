@@ -1,42 +1,6 @@
 import time as time
 import tkinter as tk
 
-class moveCube(tk.Canvas):
- 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
- 
-        self.dx = 0
-  
-        self.box = self.create_rectangle(250, 250, 260, 260, fill="black")
- 
-        self.dt = 16
-        self.tick()
-      
-    def tick(self):
- 
-        self.move(self.box, self.dx, 0)
-        self.after(self.dt, self.tick)
- 
-    def change_heading(self, dx):
-        self.dx = dx
-  
- 
-if __name__ == "__main__":
- 
-    root = tk.Tk()
-    root.geometry("500x500")
- 
-    cube = moveCube(root)
-    cube.pack(fill="both", expand=True)
- 
-    ds = 3
-  
-    root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
-    root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
-      
-    root.mainloop()
-
 def PhysicsExplanation():
     print(
         "\n An electric field is created by charged objects and other charged objects in the field will experience a force in this field. The ball starts reflecting off the plates because when it is first attracted to a plate it's polarity reverses due to the transfer of elctrons either to or from the plates. This then causes it to be attracted to the other plate with opposite polarity, with the cycle continuing until the force stops acting on it (Newton's First Law of Motion)")
@@ -728,3 +692,39 @@ for i in range(60):
     if newDrag[1]:
         cubePhysics.overrideDrag(newDrag[0])
 
+
+class moveCube(tk.Canvas):
+ 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+ 
+        self.dx = 0
+  
+        self.box = self.create_rectangle(250, 250, 260, 260, fill="black")
+ 
+        self.dt = 16
+        self.tick()
+      
+    def tick(self):
+ 
+        self.move(self.box, self.dx, 0)
+        self.after(self.dt, self.tick)
+ 
+    def change_heading(self, dx):
+        self.dx = dx
+  
+ 
+if __name__ == "__main__":
+ 
+    root = tk.Tk()
+    root.geometry("500x500")
+ 
+    cube = moveCube(root)
+    cube.pack(fill="both", expand=True)
+ 
+    ds = 3
+  
+    root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
+    root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
+      
+    root.mainloop()
