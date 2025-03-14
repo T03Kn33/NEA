@@ -779,7 +779,7 @@ if __name__ == "__main__":
 
     mass_label = ttk.Label(root, text="Mass:")
     mass_label.grid(row=0, column=0, padx=5, pady=5)
-    mass_entry = ttk.Entry(root, width=35,validatecommand=validate_cmass,validate="focusout")
+    mass_entry = ttk.Entry(root, width=35,validatecommand=validate_mass,validate="focusout")
     mass_entry.grid(row=0, column=1, padx=5, pady=5)
     charge_label = ttk.Label(root, text="Charge:")
     charge_label.grid(row=1, column=0, padx=5, pady=5)
