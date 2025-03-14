@@ -553,7 +553,7 @@ def findPermittivity(permittivityArray, validatedInput):
         return -1
 
 
-permittivityIndex = findPermittivity(permittivity, validatedPermittivity) #Stores result of binary search done to find if the input permittivity is the permittivty array
+permittivityIndex = findPermittivity(permittivity, validatedPermittivity) #Stores result of binary search done to find if the input permittivity is the permittivity array
 
 
 def commonPermittivity(): 
