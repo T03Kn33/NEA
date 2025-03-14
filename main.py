@@ -926,7 +926,7 @@ if __name__ == "__main__":
     cube = moveCube(root)
     cube.pack(fill="both", expand=True)
  
-    ds = cubePhysics.s
+    ds = cubePhysics.updateS()
   
     root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
     root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
