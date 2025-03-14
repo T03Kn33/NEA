@@ -16,7 +16,7 @@ def validate_charge():
             return True
         else:
             label.config(
-                text="Input must be a number greater than zero",
+                text="Input must be an integer greater than zero",
                 foreground="red",
             )
             return False
@@ -44,7 +44,7 @@ def validate_mass():
             return True
         else:
             label.config(
-                text="Input must be a number greater than zero",
+                text="Input must be an integer greater than zero",
                 foreground="red",
             )
             return False
@@ -72,7 +72,7 @@ def validate_gap():
             return True
         else:
             label.config(
-                text="Input must be a number greater than zero",
+                text="Input must be an integer greater than zero",
                 foreground="red",
             )
             return False
@@ -100,7 +100,7 @@ def validate_pd():
             return True
         else:
             label.config(
-                text="Input must be a number greater than zero",
+                text="Input must be an integer greater than zero",
                 foreground="red",
             )
             return False
@@ -128,7 +128,7 @@ def validate_rho():
             return True
         else:
             label.config(
-                text="Input must be a number greater than zero",
+                text="Input must be an integer greater than zero",
                 foreground="red",
             )
             return False
@@ -156,7 +156,7 @@ def validate_εr():
             return True
         else:
             label.config(
-                text="Input must be a number greater than zero",
+                text="Input must be an integer greater than zero",
                 foreground="red",
             )
             return False
