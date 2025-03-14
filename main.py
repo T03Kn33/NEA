@@ -10,7 +10,7 @@ def validate_charge():
     if charge:
         if charge.isdigit() and int(charge) > 0:
             label.config(
-                text=f"Valid input: {input}",
+                text=f"Valid input: {charge}",
                 foreground="green",
             )
             return True
@@ -38,7 +38,7 @@ def validate_mass():
     if mass:
         if mass.isdigit() and int(mass) > 0:
             label.config(
-                text=f"Valid input: {input}",
+                text=f"Valid input: {mass}",
                 foreground="green",
             )
             return True
@@ -66,7 +66,7 @@ def validate_gap():
     if gap:
         if gap.isdigit() and int(gap) > 0:
             label.config(
-                text=f"Valid input: {input}",
+                text=f"Valid input: {gap}",
                 foreground="green",
             )
             return True
@@ -94,7 +94,7 @@ def validate_pd():
     if pd:
         if pd.isdigit() and int(pd) > 0:
             label.config(
-                text=f"Valid input: {input}",
+                text=f"Valid input: {pd}",
                 foreground="green",
             )
             return True
@@ -122,7 +122,7 @@ def validate_rho():
     if rho:
         if rho.isdigit() and int(rho) > 0:
             label.config(
-                text=f"Valid input: {input}",
+                text=f"Valid input: {rho}",
                 foreground="green",
             )
             return True
@@ -150,7 +150,7 @@ def validate_εr():
     if εr:
         if εr.isdigit() and int(εr) > 0:
             label.config(
-                text=f"Valid input: {input}",
+                text=f"Valid input: {εr}",
                 foreground="green",
             )
             return True
