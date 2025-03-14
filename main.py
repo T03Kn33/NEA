@@ -905,7 +905,7 @@ if __name__ == "__main__":
     pd_label = ttk.Label(root, text="P.d.:")
     pd_label.pack(root, anchor = "w")
     pd_entry = ttk.Entry(root, width=35,validatecommand=validate_pd,validate="focusout")
-    pd.pack(root, anchor = "e")
+    pd_entry.pack(root, anchor = "e")
     rho_label = ttk.Label(root, text="Density:")
     rho_label.pack(root, anchor = "w")
     rho_entry = ttk.Entry(root, width=35,validatecommand=validate_rho,validate="focusout")
@@ -913,9 +913,8 @@ if __name__ == "__main__":
     εr_label = ttk.Label(root, text="Relative Permittivity:")
     εr_label.pack(root, anchor = "w")
     εr_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
-    εr.pack(root, anchor = "e")
-    capacitance_title = ttk.Label(root, text = "Mass")
-    capacitance = DoubleVar()
+    εr_entry.pack(root, anchor = "e")
+    capacitance_title = ttk.Label(root, text = "Capacitance:")
  
     
     label = ttk.Label(root, text="Display")
