@@ -1,22 +1,20 @@
-import time as time
 import tkinter as tk
 from tkinter import ttk
-import turtle as turtle
 
 # Create a validation function
 def validate_charge():
- try:
-    charge = charge_entry.get()
-    if charge:
-        if charge.isdigit() and int(charge) > 0:
+    input_data = charge_entry.get()
+    if input_data:
+        try:
+            float(input_data)
             label.config(
-                text=f"Valid input: {charge}",
+                text=f"Valid numeric value: {input_data}",
                 foreground="green",
             )
             return True
-        else:
+        except ValueError:
             label.config(
-                text="Input must be an integer greater than zero",
+                text=f'Numeric value expected, got "{input_data}"',
                 foreground="red",
             )
             return False
@@ -26,151 +24,28 @@ def validate_charge():
             foreground="red",
         )
         return False
- except TypeError:
-  return False
 
- except ValueError:
-  return False
-
-def validate_mass():
- try:
-    mass = mass_entry.get()
-    if mass:
-        if mass.isdigit() and int(mass) > 0:
-            label.config(
-                text=f"Valid input: {mass}",
-                foreground="green",
-            )
-            return True
-        else:
-            label.config(
-                text="Input must be an integer greater than zero",
-                foreground="red",
-            )
-            return False
-    else:
-        label.config(
-            text="Entry is empty",
-            foreground="red",
-        )
-        return False
- except TypeError:
-  return False
-
- except ValueError:
-  return False
-
-def validate_gap():
- try:
-    gap = gap_entry.get()
-    if gap:
-        if gap.isdigit() and int(gap) > 0:
-            label.config(
-                text=f"Valid input: {gap}",
-                foreground="green",
-            )
-            return True
-        else:
-            label.config(
-                text="Input must be an integer greater than zero",
-                foreground="red",
-            )
-            return False
-    else:
-        label.config(
-            text="Entry is empty",
-            foreground="red",
-        )
-        return False
- except TypeError:
-  return False
-
- except ValueError:
-  return False
-
-def validate_pd():
- try:
-    pd = pd_entry.get()
-    if pd:
-        if pd.isdigit() and int(pd) > 0:
-            label.config(
-                text=f"Valid input: {pd}",
-                foreground="green",
-            )
-            return True
-        else:
-            label.config(
-                text="Input must be an integer greater than zero",
-                foreground="red",
-            )
-            return False
-    else:
-        label.config(
-            text="Entry is empty",
-            foreground="red",
-        )
-        return False
- except TypeError:
-  return False
-
- except ValueError:
-  return False
-
-def validate_rho():
- try:
-    rho = rho_entry.get()
-    if rho:
-        if rho.isdigit() and int(rho) > 0:
-            label.config(
-                text=f"Valid input: {rho}",
-                foreground="green",
-            )
-            return True
-        else:
-            label.config(
-                text="Input must be an integer greater than zero",
-                foreground="red",
-            )
-            return False
-    else:
-        label.config(
-            text="Entry is empty",
-            foreground="red",
-        )
-        return False
- except TypeError:
-  return False
-
- except ValueError:
-  return False
-
-def validate_εr():
- try:
-    εr = εr_entry.get()
-    if εr:
-        if εr.isdigit() and int(εr) > 0:
-            label.config(
-                text=f"Valid input: {εr}",
-                foreground="green",
-            )
-            return True
-        else:
-            label.config(
-                text="Input must be an integer greater than zero",
-                foreground="red",
-            )
-            return False
-    else:
-        label.config(
-            text="Entry is empty",
-            foreground="red",
-        )
-        return False
- except TypeError:
-  return False
-
- except ValueError:
-  return False
+class movePlates(tk.Canvas):
+ 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+ 
+        self.dx = 0
+  
+        self.box1 = self.create_rectangle(0, 200, 10, 210, fill="black")
+        self.box2 = self.create_rectangle(200, 400, 210, 410, fill="black")
+ 
+        self.dt = 16
+        self.tick()
+      
+    def tick(self):
+ 
+        self.move(self.box1, self.dx, 0)
+        self.move(self.box2, self.dx, 0)
+        self.after(self.dt, self.tick)
+ 
+    def change_heading(self, dx):
+        self.dx = dx
 
 class moveCube(tk.Canvas):
  
@@ -518,12 +393,6 @@ length = len(permittivity)
 
 mergeSort(permittivity, 0, length - 1)
 
-print("\nSorted array is")
-for i in range(length - 1):
-    print(permittivity[i], end=", ")
-print(permittivity[-1]) #last element is not in for loop so is printed separately
-
-
 def inputValidation(value):
     try:
         x = float(input(f"\nEnter a positive {value} : "))
@@ -589,7 +458,8 @@ def dragCheck(drag, force):
         dragCheck(cubePhysics.drag, field.force)  
         """
 
-
+def findCapacitance(e, area, d):
+    return (e*area)/d
 commonPermittivity()
 
 u = 0.0  #U = Initial velocity
@@ -866,11 +736,11 @@ cubePhysics = CubePhysics(baseline.u, 0, baseline.mass,
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
 def iterate():
-    for i in range(60):
-        print("\n")
+    for i in range(600):
+        """print("\n")
         print(f"T = {i*baseline.t} s")
         print(cubePhysics.classVariables())
-        print(f"fieldForce = {field.force}")
+        print(f"fieldForce = {field.force}")"""
         field.updateForce(cubePhysics.charge * field.fieldStrength)
         cubePhysics.updateDrag()
         cubePhysics.updateAcceleration(cubePhysics.drag)
@@ -892,7 +762,7 @@ if __name__ == "__main__":
 
     mass_label = ttk.Label(root, text="Mass:")
     mass_label.pack(anchor = "w")
-    mass_entry = ttk.Entry(root, width=35,validatecommand=validate_mass,validate="focusout")
+    mass_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     mass_entry.pack(anchor = "e")
     charge_label = ttk.Label(root, text="Charge:")
     charge_label.pack(anchor = "w")
@@ -900,23 +770,28 @@ if __name__ == "__main__":
     charge_entry.pack(anchor = "e")
     gap_label = ttk.Label(root, text="Gap:")
     gap_label.pack(anchor = "w")
-    gap_entry = ttk.Entry(root, width=35,validatecommand=validate_gap,validate="focusout")
+    gap_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     gap_entry.pack(anchor = "e")
     pd_label = ttk.Label(root, text="P.d.:")
     pd_label.pack(anchor = "w")
-    pd_entry = ttk.Entry(root, width=35,validatecommand=validate_pd,validate="focusout")
+    pd_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     pd_entry.pack(anchor = "e")
     rho_label = ttk.Label(root, text="Density:")
     rho_label.pack(anchor = "w")
-    rho_entry = ttk.Entry(root, width=35,validatecommand=validate_rho,validate="focusout")
+    rho_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     rho_entry.pack(anchor = "e")
     εr_label = ttk.Label(root, text="Relative Permittivity:")
     εr_label.pack(anchor = "w")
-    εr_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
+    εr_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     εr_entry.pack(anchor = "e")
+    rho_label = ttk.Label(root, text="Density:")
+    rho_label.pack(anchor = "w")
+    rho_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
+    rho_entry.pack(anchor = "e")
     capacitance_title = ttk.Label(root, text = "Capacitance:")
     capacitance_title.pack(anchor = "w")
-    capacitance_value = ttk.Label(text = "")
+    capacitance = findCapacitance(dielectric.ε, plates.areaPlates, plates.gap)
+    capacitance_value = ttk.Label(text = f"{capacitance}")
     capacitance_value.pack(anchor = "e")
  
     
@@ -925,8 +800,13 @@ if __name__ == "__main__":
  
     cube = moveCube(root)
     cube.pack(fill="both", expand=True)
+
+    plateVisuals = movePlates(root)
+    plateVisuals.pack(fill="both", expand=True)
  
-    ds = cubePhysics.updateS()
+    ds = cubePhysics.s
   
     root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
     root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
+    root.bind("<KeyPress-Left>", lambda _: plateVisuals.change_heading(-ds))
+    root.bind("<KeyPress-Right>", lambda _: plateVisuals.change_heading(ds))
