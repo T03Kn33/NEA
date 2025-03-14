@@ -8,7 +8,7 @@ class moveCube(tk.Canvas):
  
         self.dx = 0
   
-        self.box = self.create_rectangle(500, 500, 510, 510, fill="black")
+        self.box = self.create_rectangle(250, 250, 260, 260, fill="black")
  
         self.dt = 16
         self.tick()
@@ -25,7 +25,7 @@ class moveCube(tk.Canvas):
 if __name__ == "__main__":
  
     root = tk.Tk()
-    root.geometry("1000x1000")
+    root.geometry("500x500")
  
     cube = moveCube(root)
     cube.pack(fill="both", expand=True)
