@@ -25,6 +25,30 @@ def validate_εr():
         )
         return False
 
+
+def validate_w():
+    input_data = w_entry.get()
+    if input_data:
+        try:
+            float(input_data)
+            label.config(
+                text=f"Valid numeric value: {input_data}",
+                foreground="green",
+            )
+            return True
+        except ValueError:
+            label.config(
+                text=f'Numeric value expected, got "{input_data}"',
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+
 def validate_charge():
     input_data = charge_entry.get()
     if input_data:
@@ -544,6 +568,8 @@ def commonPermittivity():
         print("\nThe permittivity of the dielectric is the same as " +
               relativePermittivities[f"product{permittivityIndex}"]["name"]
               )  #Used to find dielectrics with the same relative permittivity as the one inputted by user
+    else:
+        print("No material with same capacitance has been found.")
 
 
 def dragCheck(drag, force):
@@ -556,7 +582,7 @@ def dragCheck(drag, force):
     else:
         return drag , False
 
-#Function below to be reviewed
+#Function deprecated
 """def hitPlates(ball, plates):
     if ball.s >= plates.gap:
         cubePhysics.reverseV()
@@ -873,43 +899,64 @@ if __name__ == "__main__":
     root.title("Uniform Electric Field Simulator")
     root.geometry("500x500")
 
-    mass_label = ttk.Label(root, text="Mass:")
+    mass_label = ttk.Label(root, text="Mass of cube:")
     mass_label.pack(anchor = "w")
     mass_entry = ttk.Entry(root, width=35,validatecommand=validate_mass,validate="focusout")
     mass_entry.pack(anchor = "e")
-    mass_entry.insert(0,f"{baseline.mass}")
-    charge_label = ttk.Label(root, text="Charge:")
+    mass_entry.insert(0,f"{baseline.mass} kg")
+    
+    charge_label = ttk.Label(root, text="Charge of cube:")
     charge_label.pack(anchor = "w")
     charge_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     charge_entry.pack(anchor = "e")
-    charge_entry.insert(0,f"{baseline.charge}")
-    gap_label = ttk.Label(root, text="Gap:")
+    charge_entry.insert(0,f"{baseline.charge} C")
+    
+    gap_label = ttk.Label(root, text="Gap between plates:")
     gap_label.pack(anchor = "w")
     gap_entry = ttk.Entry(root, width=35,validatecommand=validate_gap,validate="focusout")
     gap_entry.pack(anchor = "e")
-    gap_entry.insert(0,f"{baseline.gap}")
-    pd_label = ttk.Label(root, text="P.D.:")
+    gap_entry.insert(0,f"{baseline.gap} m")
+    
+    pd_label = ttk.Label(root, text="P.D. between plates:")
     pd_label.pack(anchor = "w")
     pd_entry = ttk.Entry(root, width=35,validatecommand=validate_pd,validate="focusout")
     pd_entry.pack(anchor = "e")
-    pd_entry.insert(0,f"{baseline.pd}")
-    rho_label = ttk.Label(root, text="Density:")
+    pd_entry.insert(0,f"{baseline.pd} V")
+    
+    rho_label = ttk.Label(root, text="Density of dielectric:")
     rho_label.pack(anchor = "w")
     rho_entry = ttk.Entry(root, width=35,validatecommand=validate_rho,validate="focusout")
     rho_entry.pack(anchor = "e")
-    rho_entry.insert(0,f"{baseline.rho}")
+    rho_entry.insert(0,f"{baseline.rho} kg m^-3")
+    
     εr_label = ttk.Label(root, text="Relative Permittivity:")
     εr_label.pack(anchor = "w")
     εr_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
     εr_entry.pack(anchor = "e")
     εr_entry.insert(0,f"{baseline.εr}")
+
+    w_label = ttk.Label(root, text="Width of Cube:")
+    w_label.pack(anchor = "w")
+    w_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
+    w_entry.pack(anchor = "e")
+    w_entry.insert(0,f"{baseline.w} m")
+    
     capacitance_title = ttk.Label(root, text = "Capacitance:")
     capacitance_title.pack(anchor = "w")
     capacitance = findCapacitance(dielectric.ε, plates.areaPlates, plates.gap)
-    capacitance_value = ttk.Label(text = f"{capacitance}")
+    capacitance_value = ttk.Label(text = f"{capacitance} F")
     capacitance_value.pack(anchor = "e")
     
- 
+    velocity_title = ttk.Label(root, text = "Velocity of cube:")
+    velocity_title.pack(anchor = "w")
+    velocity_value = ttk.Label(text = f"{cubePhysics.v} ms^-1")
+    velocity_value.pack(anchor = "e")
+
+    acceleration_title = ttk.Label(root, text = "Acceleration of cube:")
+    acceleration_title.pack(anchor = "w")
+    acceleration_value = ttk.Label(text = f"{cubePhysics.acceleration} ms^-2")
+    acceleration_value.pack(anchor = "e")    
+
     
     label = ttk.Label(root, text="Display")
     label.pack(anchor = "s")
@@ -920,7 +967,7 @@ if __name__ == "__main__":
     plateVisuals = movePlates(root)
     plateVisuals.pack(fill="both", expand=True)
  
-    ds = cubePhysics.s
+    ds = cubePhysics.s 
   
     root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
     root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
