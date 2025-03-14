@@ -673,7 +673,7 @@ class baselineValues:  #Class for the baseline values of the componenents
             return self.drag
 
 
-class cubePhysics:
+class CubePhysics:
     global charge
     global mass
 
@@ -858,7 +858,7 @@ field = Field(plates.pd, plates.gap, plates.areaPlates,
               (plates.pd / plates.gap),
               baseline.charge * (plates.pd / plates.gap))  #Creates field
 
-cubePhysics = cubePhysics(baseline.u, 0, baseline.mass,
+cubePhysics = CubePhysics(baseline.u, 0, baseline.mass,
             (field.force + baseline.drag) / baseline.mass, baseline.charge,
             baseline.w, baseline.t)  #Creates cube
 
