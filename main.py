@@ -607,7 +607,7 @@ areaPlates = 0.01
 drag = 0.0
 
 
-class baselineValues:  #Class for the baseline values of the componenents
+class baselineValues:  #Class for the baseline values of the components
 
     def __init__(self, u, v, pd, gap, ε0, εr, mass, charge, rho, cd, w, t,
                  areaPlates, drag):
