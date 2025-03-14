@@ -864,7 +864,7 @@ cubePhysics = cubePhysics(baseline.u, 0, baseline.mass,
 
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
-def iterate(): ##Make a while loop instead for loop
+def iterate():
     for i in range(60):
         print("\n")
         print(f"T = {i*baseline.t} s")
