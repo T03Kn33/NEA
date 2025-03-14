@@ -1,9 +1,124 @@
 import tkinter as tk
 from tkinter import ttk
 
-# Create a validation function
+# Create validation functions
+def validate_εr():
+    input_data = εr_entry.get()
+    if input_data:
+        try:
+            float(input_data)
+            label.config(
+                text=f"Valid numeric value: {input_data}",
+                foreground="green",
+            )
+            return True
+        except ValueError:
+            label.config(
+                text=f'Numeric value expected, got "{input_data}"',
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+
 def validate_charge():
     input_data = charge_entry.get()
+    if input_data:
+        try:
+            float(input_data)
+            label.config(
+                text=f"Valid numeric value: {input_data}",
+                foreground="green",
+            )
+            return True
+        except ValueError:
+            label.config(
+                text=f'Numeric value expected, got "{input_data}"',
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+
+def validate_mass():
+    input_data = mass_entry.get()
+    if input_data:
+        try:
+            float(input_data)
+            label.config(
+                text=f"Valid numeric value: {input_data}",
+                foreground="green",
+            )
+            return True
+        except ValueError:
+            label.config(
+                text=f'Numeric value expected, got "{input_data}"',
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+
+def validate_rho():
+    input_data = rho_entry.get()
+    if input_data:
+        try:
+            float(input_data)
+            label.config(
+                text=f"Valid numeric value: {input_data}",
+                foreground="green",
+            )
+            return True
+        except ValueError:
+            label.config(
+                text=f'Numeric value expected, got "{input_data}"',
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+
+def validate_gap():
+    input_data = gap_entry.get()
+    if input_data:
+        try:
+            float(input_data)
+            label.config(
+                text=f"Valid numeric value: {input_data}",
+                foreground="green",
+            )
+            return True
+        except ValueError:
+            label.config(
+                text=f'Numeric value expected, got "{input_data}"',
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+
+def validate_pd():
+    input_data = pd_entry.get()
     if input_data:
         try:
             float(input_data)
