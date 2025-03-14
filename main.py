@@ -1,5 +1,6 @@
 import time as time
 import tkinter as tk
+from tkinter import ttk
 
 # Create a validation function
 def validate_charge():
