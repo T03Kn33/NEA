@@ -142,6 +142,34 @@ def validate_rho():
  except ValueError:
   return False
 
+def validate_εr():
+ try:
+    εr = εr_entry.get()
+    if εr:
+        if εr.isdigit() and εr > 0:
+            label.config(
+                text=f"Valid input: {input}",
+                foreground="green",
+            )
+            return True
+        else:
+            label.config(
+                text="Input must be a number greater than zero",
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+ except TypeError:
+  return False
+
+ except ValueError:
+  return False
+
 class moveCube(tk.Canvas):
  
     def __init__(self, *args, **kwargs):
