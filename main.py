@@ -524,9 +524,9 @@ print(permittivity[-1]) #last element is not in for loop so is printed separatel
 
 def inputValidation(value):
     try:
-        input = float(input(f"\nEnter a positive {value} : "))
-        if (type(input) is int or type(input) is float) and x > 0:
-            return input
+        x = float(input(f"\nEnter a positive {value} : "))
+        if (type(x) is int or type(x) is float) and x > 0:
+            return x
 
         else:
             print(f"Please enter a positive {value}")
