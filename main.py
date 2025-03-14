@@ -547,6 +547,23 @@ def inputValidation(value):
         print(f"Please enter a positive {value}")
         return inputValidation(value)
 
+def inputValidation_int(value):
+    try:
+        x = int(input(f"\nEnter a positive {value} : "))
+        if type(x) is int and x > 0:
+            return x
+
+        else:
+            print(f"Please enter a positive {value}")
+            return inputValidation(value)
+    except TypeError:
+        print(f"Please enter a positive {value}")
+        return inputValidation(value)
+
+    except ValueError:
+        print(f"Please enter a positive {value}")
+        return inputValidation(value)
+
 
 validatedPermittivity = inputValidation("permittivity")  #Value once validated is stored as validatedPermittivity
 
@@ -723,8 +740,8 @@ class CubePhysics:
         self.drag = -(0.5 * dielectric.cd * dielectric.rho * self.crossArea *
                       self.v * self.v)
 
-    def updateR(self, r):
-        self.r = r
+    def updateW(self, w):
+        self.w = w
 
     def reverseU(self):
         self.u = -self.u
@@ -874,12 +891,36 @@ cubePhysics = CubePhysics(baseline.u, 0, baseline.mass,
 
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
 
-def iterate():
-    for i in range(600):
-        """print("\n")
+no_of_loops = inputValidation_int("number of loops")
+
+def iterate(n):
+    for i in range(n):
+        print("\n")
         print(f"T = {i*baseline.t} s")
         print(cubePhysics.classVariables())
-        print(f"fieldForce = {field.force}")"""
+        print(f"fieldForce = {field.force}")
+        
+        cubeCharge = inputValidation("charge")
+        cubePhysics.updateCharge(cubeCharge)
+        
+        cubeMass = inputValidation("mass")
+        cubePhysics.updateMass(cubeMass)
+
+        cubeWidth = inputValidation("width")
+        cubePhysics.updateW(cubeWidth)
+        
+        pdplates = inputValidation("potential difference")
+        plates.updatePD(pdplates)
+        
+        gapplates = inputValidation("gap")
+        plates.updateGap(gapplates)
+
+        density = inputValidation("density")
+        dielectric.updateRho(density)
+        
+        relative = inputValidation("relative permittivitty")
+        dielectric.updateεr(relative)
+           
         field.updateForce(cubePhysics.charge * field.fieldStrength)
         cubePhysics.updateDrag()
         cubePhysics.updateAcceleration(cubePhysics.drag)
@@ -891,7 +932,7 @@ def iterate():
         if newDrag[1]:
             cubePhysics.overrideDrag(newDrag[0])
 
-iterate() #Prints underlying physics values  
+iterate(no_of_loops) #Prints underlying physics values  
  
 if __name__ == "__main__":
  
@@ -903,43 +944,43 @@ if __name__ == "__main__":
     mass_label.pack(anchor = "w")
     mass_entry = ttk.Entry(root, width=35,validatecommand=validate_mass,validate="focusout")
     mass_entry.pack(anchor = "e")
-    mass_entry.insert(0,f"{baseline.mass} kg")
+    mass_entry.insert(0,f"{cubePhysics.mass} kg")
     
     charge_label = ttk.Label(root, text="Charge of cube:")
     charge_label.pack(anchor = "w")
     charge_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     charge_entry.pack(anchor = "e")
-    charge_entry.insert(0,f"{baseline.charge} C")
+    charge_entry.insert(0,f"{cubePhysics.charge} C")
     
     gap_label = ttk.Label(root, text="Gap between plates:")
     gap_label.pack(anchor = "w")
     gap_entry = ttk.Entry(root, width=35,validatecommand=validate_gap,validate="focusout")
     gap_entry.pack(anchor = "e")
-    gap_entry.insert(0,f"{baseline.gap} m")
+    gap_entry.insert(0,f"{plates.gap} m")
     
     pd_label = ttk.Label(root, text="P.D. between plates:")
     pd_label.pack(anchor = "w")
     pd_entry = ttk.Entry(root, width=35,validatecommand=validate_pd,validate="focusout")
     pd_entry.pack(anchor = "e")
-    pd_entry.insert(0,f"{baseline.pd} V")
+    pd_entry.insert(0,f"{plates.pd} V")
     
     rho_label = ttk.Label(root, text="Density of dielectric:")
     rho_label.pack(anchor = "w")
     rho_entry = ttk.Entry(root, width=35,validatecommand=validate_rho,validate="focusout")
     rho_entry.pack(anchor = "e")
-    rho_entry.insert(0,f"{baseline.rho} kg m^-3")
+    rho_entry.insert(0,f"{dielectric.rho} kg m^-3")
     
     εr_label = ttk.Label(root, text="Relative Permittivity:")
     εr_label.pack(anchor = "w")
     εr_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
     εr_entry.pack(anchor = "e")
-    εr_entry.insert(0,f"{baseline.εr}")
+    εr_entry.insert(0,f"{dielectric.εr}")
 
     w_label = ttk.Label(root, text="Width of Cube:")
     w_label.pack(anchor = "w")
     w_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
     w_entry.pack(anchor = "e")
-    w_entry.insert(0,f"{baseline.w} m")
+    w_entry.insert(0,f"{cubePhysics.w} m")
     
     capacitance_title = ttk.Label(root, text = "Capacitance:")
     capacitance_title.pack(anchor = "w")
@@ -955,7 +996,7 @@ if __name__ == "__main__":
     acceleration_title = ttk.Label(root, text = "Acceleration of cube:")
     acceleration_title.pack(anchor = "w")
     acceleration_value = ttk.Label(text = f"{cubePhysics.acceleration} ms^-2")
-    acceleration_value.pack(anchor = "e")    
+    acceleration_value.pack(anchor = "e")
 
     
     label = ttk.Label(root, text="Display")
@@ -967,9 +1008,10 @@ if __name__ == "__main__":
     plateVisuals = movePlates(root)
     plateVisuals.pack(fill="both", expand=True)
  
-    ds = cubePhysics.s 
+    ds = cubePhysics.s * 10
   
     root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
     root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
     root.bind("<KeyPress-Up>", lambda _: plateVisuals.change_heading(-ds))
     root.bind("<KeyPress-Down>", lambda _: plateVisuals.change_heading(ds))
+
