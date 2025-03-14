@@ -915,7 +915,7 @@ if __name__ == "__main__":
     εr_entry = ttk.Entry(root, width=35,validatecommand=validate_εr,validate="focusout")
     εr_entry.pack(anchor = "e")
     capacitance_title = ttk.Label(root, text = "Capacitance:")
-    capacitance_tile.pack(anchor = "w")
+    capacitance_title.pack(anchor = "w")
     capacitance_value = ttk.Label(text = "")
     capacitance_value.pack(anchor = "e")
  
