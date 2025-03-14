@@ -890,7 +890,7 @@ cubePhysics = CubePhysics(baseline.u, 0, baseline.mass,
             baseline.w, baseline.t)  #Creates cube
 
 #(plates.pd/plates.gap) = fieldStrength | cubePhysics.charge * (plates.pd / plates.gap) = force
-
+physicsExplanation()
 no_of_loops = inputValidation_int("number of loops")
 
 def iterate(n):
