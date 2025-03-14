@@ -30,7 +30,33 @@ def validate_charge():
  except ValueError:
   return False
 
+def validate_mass():
+ try:
+    mass = mass_entry.get()
+    if mass:
+        if mass.isdigit() and mass > 0:
+            label.config(
+                text=f"Valid input: {input}",
+                foreground="green",
+            )
+            return True
+        else:
+            label.config(
+                text="Input must be a number greater than zero",
+                foreground="red",
+            )
+            return False
+    else:
+        label.config(
+            text="Entry is empty",
+            foreground="red",
+        )
+        return False
+ except TypeError:
+  return False
 
+ except ValueError:
+  return False
 
 class moveCube(tk.Canvas):
  
@@ -751,13 +777,13 @@ if __name__ == "__main__":
     root.title("Uniform Electric Field Simulator")
     root.geometry("500x500")
 
-    name_label = ttk.Label(root, text="Name:")
-    name_label.grid(row=0, column=0, padx=5, pady=5)
-    name_entry = ttk.Entry(root, width=35)
-    name_entry.grid(row=0, column=1, padx=5, pady=5)
-    charge_label = ttk.Label(root, text="charge:")
+    mass_label = ttk.Label(root, text="Mass:")
+    mass_label.grid(row=0, column=0, padx=5, pady=5)
+    mass_entry = ttk.Entry(root, width=35,validatecommand=validate_cmass,validate="focusout")
+    mass_entry.grid(row=0, column=1, padx=5, pady=5)
+    charge_label = ttk.Label(root, text="Charge:")
     charge_label.grid(row=1, column=0, padx=5, pady=5)
-    charge_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validatecommand=validate_charge)
+    charge_entry = ttk.Entry(root, width=35,validatecommand=validate_charge,validate="focusout")
     charge_entry.grid(row=1, column=1, padx=5, pady=5)
     label = ttk.Label(root, text="Display")
     label.grid(row=2, column=0, columnspan=2, padx=5, pady=5) 
