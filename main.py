@@ -147,8 +147,7 @@ class movePlates(tk.Canvas):
  
         self.dx = 0
   
-        self.box1 = self.create_rectangle(0, 200, 10, 210, fill="black")
-        self.box2 = self.create_rectangle(200, 400, 210, 410, fill="black")
+        self.box1 = self.create_rectangle(200, 200, 210, 210, fill="black")
  
         self.dt = 16
         self.tick()
@@ -156,7 +155,6 @@ class movePlates(tk.Canvas):
     def tick(self):
  
         self.move(self.box1, self.dx, 0)
-        self.move(self.box2, self.dx, 0)
         self.after(self.dt, self.tick)
  
     def change_heading(self, dx):
@@ -890,7 +888,7 @@ if __name__ == "__main__":
     gap_entry = ttk.Entry(root, width=35,validatecommand=validate_gap,validate="focusout")
     gap_entry.pack(anchor = "e")
     gap_entry.insert(0,f"{baseline.gap}")
-    pd_label = ttk.Label(root, text="P.d.:")
+    pd_label = ttk.Label(root, text="P.D.:")
     pd_label.pack(anchor = "w")
     pd_entry = ttk.Entry(root, width=35,validatecommand=validate_pd,validate="focusout")
     pd_entry.pack(anchor = "e")
@@ -910,6 +908,7 @@ if __name__ == "__main__":
     capacitance = findCapacitance(dielectric.ε, plates.areaPlates, plates.gap)
     capacitance_value = ttk.Label(text = f"{capacitance}")
     capacitance_value.pack(anchor = "e")
+    
  
     
     label = ttk.Label(root, text="Display")
@@ -925,5 +924,5 @@ if __name__ == "__main__":
   
     root.bind("<KeyPress-Left>", lambda _: cube.change_heading(-ds))
     root.bind("<KeyPress-Right>", lambda _: cube.change_heading(ds))
-    root.bind("<KeyPress-Left>", lambda _: plateVisuals.change_heading(-ds))
-    root.bind("<KeyPress-Right>", lambda _: plateVisuals.change_heading(ds))
+    root.bind("<KeyPress-Up>", lambda _: plateVisuals.change_heading(-ds))
+    root.bind("<KeyPress-Down>", lambda _: plateVisuals.change_heading(ds))
