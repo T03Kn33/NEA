@@ -771,7 +771,6 @@ class Plates:
         print("areaPlates = " + str(self.areaPlates))
 
 
-#Try use inheritance for field and dielectric | (https://www.w3schools.com/python/python_inheritance.asp)
 class Dielectric(Plates):
     global ε
     global rho
