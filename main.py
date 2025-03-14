@@ -1,14 +1,14 @@
 import time as time
 import tkinter as tk
 from tkinter import ttk
-import turtle as turt
+import turtle as turtle
 
 # Create a validation function
 def validate_charge():
  try:
     charge = charge_entry.get()
     if charge:
-        if charge.isdigit() and charge > 0:
+        if charge.isdigit() and int(charge) > 0:
             label.config(
                 text=f"Valid input: {input}",
                 foreground="green",
@@ -36,7 +36,7 @@ def validate_mass():
  try:
     mass = mass_entry.get()
     if mass:
-        if mass.isdigit() and mass > 0:
+        if mass.isdigit() and int(mass) > 0:
             label.config(
                 text=f"Valid input: {input}",
                 foreground="green",
@@ -64,7 +64,7 @@ def validate_gap():
  try:
     gap = gap_entry.get()
     if gap:
-        if gap.isdigit() and gap > 0:
+        if gap.isdigit() and int(gap) > 0:
             label.config(
                 text=f"Valid input: {input}",
                 foreground="green",
@@ -92,7 +92,7 @@ def validate_pd():
  try:
     pd = pd_entry.get()
     if pd:
-        if pd.isdigit() and pd > 0:
+        if pd.isdigit() and int(pd) > 0:
             label.config(
                 text=f"Valid input: {input}",
                 foreground="green",
@@ -120,7 +120,7 @@ def validate_rho():
  try:
     rho = rho_entry.get()
     if rho:
-        if rho.isdigit() and rho > 0:
+        if rho.isdigit() and int(rho) > 0:
             label.config(
                 text=f"Valid input: {input}",
                 foreground="green",
@@ -148,7 +148,7 @@ def validate_εr():
  try:
     εr = εr_entry.get()
     if εr:
-        if εr.isdigit() and εr > 0:
+        if εr.isdigit() and int(εr) > 0:
             label.config(
                 text=f"Valid input: {input}",
                 foreground="green",
